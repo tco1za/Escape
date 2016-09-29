@@ -1,6 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Linq;
+using System.Diagnostics;
 
 namespace Escape
 {
@@ -14,6 +17,25 @@ namespace Escape
 
         public Game1()
         {
+
+            using (var db = new EscapeDatabaseEntities())
+            {
+
+                var query = from b in db.EntityTypes
+                            orderby b.name
+                            select b;
+
+
+                Debug.Indent();
+                Debug.WriteLine("All All student in the database", "Field");
+
+                foreach (var item in query)
+                {
+                    Debug.WriteLine(item.name);
+                }
+
+            }
+
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }

@@ -1,0 +1,308 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="EscapeDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Entity">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EntityType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="entityID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="InstantiatedEntity">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="sceneID" Type="int" Nullable="false" />
+          <Property Name="entityID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Scene">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WorldCoords">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="x" Type="float" Nullable="false" />
+          <Property Name="y" Type="float" Nullable="false" />
+          <Property Name="entityID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_EntityType_ToEntity">
+          <End Role="Entity" Type="Self.Entity" Multiplicity="1" />
+          <End Role="EntityType" Type="Self.EntityType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Entity">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EntityType">
+              <PropertyRef Name="entityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InstantiatedEntity_ToEntity">
+          <End Role="Entity" Type="Self.Entity" Multiplicity="1" />
+          <End Role="InstantiatedEntity" Type="Self.InstantiatedEntity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Entity">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InstantiatedEntity">
+              <PropertyRef Name="entityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InstantiatedEntity_ToScene">
+          <End Role="Scene" Type="Self.Scene" Multiplicity="1" />
+          <End Role="InstantiatedEntity" Type="Self.InstantiatedEntity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Scene">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InstantiatedEntity">
+              <PropertyRef Name="sceneID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorldCoords_ToEntity">
+          <End Role="Entity" Type="Self.Entity" Multiplicity="1" />
+          <End Role="WorldCoords" Type="Self.WorldCoords" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Entity">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WorldCoords">
+              <PropertyRef Name="entityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EscapeDatabaseModelStoreContainer">
+          <EntitySet Name="Entity" EntityType="Self.Entity" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EntityType" EntityType="Self.EntityType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InstantiatedEntity" EntityType="Self.InstantiatedEntity" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Scene" EntityType="Self.Scene" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WorldCoords" EntityType="Self.WorldCoords" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_EntityType_ToEntity" Association="Self.FK_EntityType_ToEntity">
+            <End Role="Entity" EntitySet="Entity" />
+            <End Role="EntityType" EntitySet="EntityType" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InstantiatedEntity_ToEntity" Association="Self.FK_InstantiatedEntity_ToEntity">
+            <End Role="Entity" EntitySet="Entity" />
+            <End Role="InstantiatedEntity" EntitySet="InstantiatedEntity" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InstantiatedEntity_ToScene" Association="Self.FK_InstantiatedEntity_ToScene">
+            <End Role="Scene" EntitySet="Scene" />
+            <End Role="InstantiatedEntity" EntitySet="InstantiatedEntity" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorldCoords_ToEntity" Association="Self.FK_WorldCoords_ToEntity">
+            <End Role="Entity" EntitySet="Entity" />
+            <End Role="WorldCoords" EntitySet="WorldCoords" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EscapeDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Entity">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="EntityTypes" Relationship="Self.FK_EntityType_ToEntity" FromRole="Entity" ToRole="EntityType" />
+          <NavigationProperty Name="InstantiatedEntities" Relationship="Self.FK_InstantiatedEntity_ToEntity" FromRole="Entity" ToRole="InstantiatedEntity" />
+          <NavigationProperty Name="WorldCoords" Relationship="Self.FK_WorldCoords_ToEntity" FromRole="Entity" ToRole="WorldCoords" />
+        </EntityType>
+        <EntityType Name="EntityType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="entityID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Entity" Relationship="Self.FK_EntityType_ToEntity" FromRole="EntityType" ToRole="Entity" />
+        </EntityType>
+        <EntityType Name="InstantiatedEntity">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="sceneID" Type="Int32" Nullable="false" />
+          <Property Name="entityID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Entity" Relationship="Self.FK_InstantiatedEntity_ToEntity" FromRole="InstantiatedEntity" ToRole="Entity" />
+          <NavigationProperty Name="Scene" Relationship="Self.FK_InstantiatedEntity_ToScene" FromRole="InstantiatedEntity" ToRole="Scene" />
+        </EntityType>
+        <EntityType Name="Scene">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="InstantiatedEntities" Relationship="Self.FK_InstantiatedEntity_ToScene" FromRole="Scene" ToRole="InstantiatedEntity" />
+        </EntityType>
+        <EntityType Name="WorldCoord">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="x" Type="Double" Nullable="false" />
+          <Property Name="y" Type="Double" Nullable="false" />
+          <Property Name="entityID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Entity" Relationship="Self.FK_WorldCoords_ToEntity" FromRole="WorldCoords" ToRole="Entity" />
+        </EntityType>
+        <Association Name="FK_EntityType_ToEntity">
+          <End Role="Entity" Type="Self.Entity" Multiplicity="1" />
+          <End Role="EntityType" Type="Self.EntityType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Entity">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EntityType">
+              <PropertyRef Name="entityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InstantiatedEntity_ToEntity">
+          <End Role="Entity" Type="Self.Entity" Multiplicity="1" />
+          <End Role="InstantiatedEntity" Type="Self.InstantiatedEntity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Entity">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InstantiatedEntity">
+              <PropertyRef Name="entityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorldCoords_ToEntity">
+          <End Role="Entity" Type="Self.Entity" Multiplicity="1" />
+          <End Role="WorldCoords" Type="Self.WorldCoord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Entity">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WorldCoords">
+              <PropertyRef Name="entityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InstantiatedEntity_ToScene">
+          <End Role="Scene" Type="Self.Scene" Multiplicity="1" />
+          <End Role="InstantiatedEntity" Type="Self.InstantiatedEntity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Scene">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InstantiatedEntity">
+              <PropertyRef Name="sceneID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EscapeDatabaseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Entities" EntityType="Self.Entity" />
+          <EntitySet Name="EntityTypes" EntityType="Self.EntityType" />
+          <EntitySet Name="InstantiatedEntities" EntityType="Self.InstantiatedEntity" />
+          <EntitySet Name="Scenes" EntityType="Self.Scene" />
+          <EntitySet Name="WorldCoords" EntityType="Self.WorldCoord" />
+          <AssociationSet Name="FK_EntityType_ToEntity" Association="Self.FK_EntityType_ToEntity">
+            <End Role="Entity" EntitySet="Entities" />
+            <End Role="EntityType" EntitySet="EntityTypes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InstantiatedEntity_ToEntity" Association="Self.FK_InstantiatedEntity_ToEntity">
+            <End Role="Entity" EntitySet="Entities" />
+            <End Role="InstantiatedEntity" EntitySet="InstantiatedEntities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorldCoords_ToEntity" Association="Self.FK_WorldCoords_ToEntity">
+            <End Role="Entity" EntitySet="Entities" />
+            <End Role="WorldCoords" EntitySet="WorldCoords" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InstantiatedEntity_ToScene" Association="Self.FK_InstantiatedEntity_ToScene">
+            <End Role="Scene" EntitySet="Scenes" />
+            <End Role="InstantiatedEntity" EntitySet="InstantiatedEntities" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EscapeDatabaseModelStoreContainer" CdmEntityContainer="EscapeDatabaseEntities">
+          <EntitySetMapping Name="Entities">
+            <EntityTypeMapping TypeName="EscapeDatabaseModel.Entity">
+              <MappingFragment StoreEntitySet="Entity">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EntityTypes">
+            <EntityTypeMapping TypeName="EscapeDatabaseModel.EntityType">
+              <MappingFragment StoreEntitySet="EntityType">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="entityID" ColumnName="entityID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InstantiatedEntities">
+            <EntityTypeMapping TypeName="EscapeDatabaseModel.InstantiatedEntity">
+              <MappingFragment StoreEntitySet="InstantiatedEntity">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="sceneID" ColumnName="sceneID" />
+                <ScalarProperty Name="entityID" ColumnName="entityID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Scenes">
+            <EntityTypeMapping TypeName="EscapeDatabaseModel.Scene">
+              <MappingFragment StoreEntitySet="Scene">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorldCoords">
+            <EntityTypeMapping TypeName="EscapeDatabaseModel.WorldCoord">
+              <MappingFragment StoreEntitySet="WorldCoords">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="x" ColumnName="x" />
+                <ScalarProperty Name="y" ColumnName="y" />
+                <ScalarProperty Name="entityID" ColumnName="entityID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
