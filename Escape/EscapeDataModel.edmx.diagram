@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="734a7b7b89314901b768b9fba984c1a1" Name="Diagram1" ZoomLevel="78" DisplayType="true" >
+        <EntityTypeShape EntityType="EscapeDataModel.Entity" Width="2.5" PointX="4" PointY="7.25" />
+        <EntityTypeShape EntityType="EscapeDataModel.EntityType" PointX="1.125" PointY="6" Width="1.5" />
+        <AssociationConnector Association="EscapeDataModel.EntityTypeEntity" />
+        <EntityTypeShape EntityType="EscapeDataModel.InstantiatedEntity" PointX="1.125" PointY="8.875" Width="2.125" IsExpanded="true" />
+        <AssociationConnector Association="EscapeDataModel.InstantiatedEntityEntity" />
+        <EntityTypeShape EntityType="EscapeDataModel.Scene" Width="1.5" PointX="8" PointY="7.125" />
+        <EntityTypeShape EntityType="EscapeDataModel.Level" Width="1.5" PointX="7.875" PointY="10.375" />
+        <AssociationConnector Association="EscapeDataModel.LevelScene" />
+        <EntityTypeShape EntityType="EscapeDataModel.SaveGame" Width="1.5" PointX="10.625" PointY="9.875" />
+        <AssociationConnector Association="EscapeDataModel.SceneSavegame" />
+        <EntityTypeShape EntityType="EscapeDataModel.CellCoords" Width="1.5" PointX="5.5" PointY="10" />
+        <AssociationConnector Association="EscapeDataModel.CellCoordsEntity" />
+        <EntityTypeShape EntityType="EscapeDataModel.ScreenCoords" Width="1.5" PointX="3.625" PointY="10.625" />
+        <AssociationConnector Association="EscapeDataModel.ScreenCoordsEntity" />
+        <EntityTypeShape EntityType="EscapeDataModel.ComponentDependencies" Width="2.125" PointX="10.125" PointY="6.125" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

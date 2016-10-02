@@ -32,7 +32,7 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <PlatformTarget>x64</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -54,38 +54,51 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="CellCoords.cs">
+      <DependentUpon>EscapeDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CheckDatabaseIntegrity.cs" />
+    <Compile Include="ComponentDependencies.cs">
+      <DependentUpon>EscapeDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity.cs">
-      <DependentUpon>EscapeEntityFrameWorkModel.tt</DependentUpon>
+      <DependentUpon>EscapeDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="EntityType.cs">
-      <DependentUpon>EscapeEntityFrameWorkModel.tt</DependentUpon>
+      <DependentUpon>EscapeDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="EscapeEntityFrameWorkModel.Context.cs">
+    <Compile Include="EscapeDataModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>EscapeEntityFrameWorkModel.Context.tt</DependentUpon>
+      <DependentUpon>EscapeDataModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="EscapeEntityFrameWorkModel.cs">
+    <Compile Include="EscapeDataModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>EscapeEntityFrameWorkModel.tt</DependentUpon>
+      <DependentUpon>EscapeDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="EscapeEntityFrameWorkModel.Designer.cs">
+    <Compile Include="EscapeDataModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>EscapeEntityFrameWorkModel.edmx</DependentUpon>
+      <DependentUpon>EscapeDataModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Game1.cs" />
     <Compile Include="InstantiatedEntity.cs">
-      <DependentUpon>EscapeEntityFrameWorkModel.tt</DependentUpon>
+      <DependentUpon>EscapeDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Program.cs" />
+    <Compile Include="Level.cs">
+      <DependentUpon>EscapeDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MainUpdateLoop.cs" />
+    <Compile Include="MainEntryPoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Scene.cs">
-      <DependentUpon>EscapeEntityFrameWorkModel.tt</DependentUpon>
+    <Compile Include="SaveGame.cs">
+      <DependentUpon>EscapeDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="WorldCoord.cs">
-      <DependentUpon>EscapeEntityFrameWorkModel.tt</DependentUpon>
+    <Compile Include="Scene.cs">
+      <DependentUpon>EscapeDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ScreenCoords.cs">
+      <DependentUpon>EscapeDataModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -103,27 +116,23 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="EscapeDatabase.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="EscapeDatabase_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DependentUpon>EscapeDatabase.mdf</DependentUpon>
-    </Content>
-    <Content Include="EscapeEntityFrameWorkModel.Context.tt">
+    <Content Include="EscapeDataModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>EscapeEntityFrameWorkModel.edmx</DependentUpon>
-      <LastGenOutput>EscapeEntityFrameWorkModel.Context.cs</LastGenOutput>
+      <LastGenOutput>EscapeDataModel.Context.cs</LastGenOutput>
+      <DependentUpon>EscapeDataModel.edmx</DependentUpon>
     </Content>
-    <Content Include="EscapeEntityFrameWorkModel.tt">
+    <Content Include="EscapeDataModel.edmx.sql" />
+    <Content Include="EscapeDataModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>EscapeEntityFrameWorkModel.edmx</DependentUpon>
-      <LastGenOutput>EscapeEntityFrameWorkModel.cs</LastGenOutput>
+      <LastGenOutput>EscapeDataModel.cs</LastGenOutput>
+      <DependentUpon>EscapeDataModel.edmx</DependentUpon>
     </Content>
     <Content Include="Icon.ico" />
   </ItemGroup>
@@ -131,13 +140,15 @@
     <MonoGameContentReference Include="Content\Content.mgcb" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
-    <EntityDeploy Include="EscapeEntityFrameWorkModel.edmx">
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <EntityDeploy Include="EscapeDataModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>EscapeEntityFrameWorkModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>EscapeDataModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="EscapeEntityFrameWorkModel.edmx.diagram">
-      <DependentUpon>EscapeEntityFrameWorkModel.edmx</DependentUpon>
+    <None Include="EscapeDataModel.edmx.diagram">
+      <DependentUpon>EscapeDataModel.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>

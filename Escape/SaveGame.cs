@@ -12,13 +12,11 @@ namespace Escape
     using System;
     using System.Collections.Generic;
     
-    public partial class WorldCoord
+    public partial class SaveGame
     {
         public int Id { get; set; }
-        public double x { get; set; }
-        public double y { get; set; }
-        public int entityID { get; set; }
+        public string name { get; set; }
     
-        public virtual Entity Entity { get; set; }
+        public virtual Scene Scene { get; set; }
     }
 }

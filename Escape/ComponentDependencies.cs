@@ -12,18 +12,10 @@ namespace Escape
     using System;
     using System.Collections.Generic;
     
-    public partial class EntityType
+    public partial class ComponentDependencies
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public EntityType()
-        {
-            this.Entities = new HashSet<Entity>();
-        }
-    
-        public string name { get; set; }
         public int Id { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Entity> Entities { get; set; }
+        public string componentName { get; set; }
+        public string dependsOn { get; set; }
     }
 }

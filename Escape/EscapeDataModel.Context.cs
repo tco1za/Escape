@@ -13,10 +13,10 @@ namespace Escape
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class EscapeDatabaseEntities : DbContext
+    public partial class EscapeDataModelContainer : DbContext
     {
-        public EscapeDatabaseEntities()
-            : base("name=EscapeDatabaseEntities")
+        public EscapeDataModelContainer()
+            : base("name=EscapeDataModelContainer")
         {
         }
     
@@ -29,6 +29,10 @@ namespace Escape
         public virtual DbSet<EntityType> EntityTypes { get; set; }
         public virtual DbSet<InstantiatedEntity> InstantiatedEntities { get; set; }
         public virtual DbSet<Scene> Scenes { get; set; }
-        public virtual DbSet<WorldCoord> WorldCoords { get; set; }
+        public virtual DbSet<Level> Levels { get; set; }
+        public virtual DbSet<SaveGame> SaveGames { get; set; }
+        public virtual DbSet<CellCoords> CellCoords { get; set; }
+        public virtual DbSet<ScreenCoords> ScreenCoords { get; set; }
+        public virtual DbSet<ComponentDependencies> ComponentDependencies { get; set; }
     }
 }

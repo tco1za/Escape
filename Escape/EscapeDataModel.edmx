@@ -1,0 +1,485 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="EscapeDataModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="EscapeDataModelStoreContainer">
+    <EntitySet Name="Entities" EntityType="EscapeDataModel.Store.Entities" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="EntityTypes" EntityType="EscapeDataModel.Store.EntityTypes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="InstantiatedEntities" EntityType="EscapeDataModel.Store.InstantiatedEntities" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Scenes" EntityType="EscapeDataModel.Store.Scenes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Levels" EntityType="EscapeDataModel.Store.Levels" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SaveGames" EntityType="EscapeDataModel.Store.SaveGames" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CellCoords" EntityType="EscapeDataModel.Store.CellCoords" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ScreenCoords" EntityType="EscapeDataModel.Store.ScreenCoords" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ComponentDependencies" EntityType="EscapeDataModel.Store.ComponentDependencies" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="EntityTypeEntity" Association="EscapeDataModel.Store.EntityTypeEntity">
+      <End Role="EntityType" EntitySet="EntityTypes" />
+      <End Role="Entity" EntitySet="Entities" />
+    </AssociationSet>
+    <AssociationSet Name="InstantiatedEntityEntity" Association="EscapeDataModel.Store.InstantiatedEntityEntity">
+      <End Role="InstantiatedEntity" EntitySet="InstantiatedEntities" />
+      <End Role="Entity" EntitySet="Entities" />
+    </AssociationSet>
+    <AssociationSet Name="LevelScene" Association="EscapeDataModel.Store.LevelScene">
+      <End Role="Level" EntitySet="Levels" />
+      <End Role="Scene" EntitySet="Scenes" />
+    </AssociationSet>
+    <AssociationSet Name="SceneEntity1" Association="EscapeDataModel.Store.SceneSavegame">
+      <End Role="Scene" EntitySet="Scenes" />
+      <End Role="SaveGame" EntitySet="SaveGames" />
+    </AssociationSet>
+    <AssociationSet Name="CellCoordsEntity" Association="EscapeDataModel.Store.CellCoordsEntity">
+      <End Role="CellCoords" EntitySet="CellCoords" />
+      <End Role="Entity" EntitySet="Entities" />
+    </AssociationSet>
+    <AssociationSet Name="ScreenCoordsEntity" Association="EscapeDataModel.Store.ScreenCoordsEntity">
+      <End Role="ScreenCoords" EntitySet="ScreenCoords" />
+      <End Role="Entity" EntitySet="Entities" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Entities">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EntityType_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EntityTypes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="InstantiatedEntities">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Entity_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Scenes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Levels">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Scene_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SaveGames">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Scene_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CellCoords">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="x" Type="int" Nullable="false" />
+    <Property Name="y" Type="int" Nullable="false" />
+    <Property Name="Entity_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ScreenCoords">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="x" Type="int" Nullable="false" />
+    <Property Name="y" Type="int" Nullable="false" />
+    <Property Name="Entity_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ComponentDependencies">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="componentName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="dependsOn" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="EntityTypeEntity">
+    <End Role="EntityType" Type="EscapeDataModel.Store.EntityTypes" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Entity" Type="EscapeDataModel.Store.Entities" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EntityType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Entity">
+        <PropertyRef Name="EntityType_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="InstantiatedEntityEntity">
+    <End Role="InstantiatedEntity" Type="EscapeDataModel.Store.InstantiatedEntities" Multiplicity="*" />
+    <End Role="Entity" Type="EscapeDataModel.Store.Entities" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Entity">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="InstantiatedEntity">
+        <PropertyRef Name="Entity_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="LevelScene">
+    <End Role="Level" Type="EscapeDataModel.Store.Levels" Multiplicity="*" />
+    <End Role="Scene" Type="EscapeDataModel.Store.Scenes" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Scene">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Level">
+        <PropertyRef Name="Scene_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SceneSavegame">
+    <End Role="Scene" Type="EscapeDataModel.Store.Scenes" Multiplicity="1" />
+    <End Role="SaveGame" Type="EscapeDataModel.Store.SaveGames" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Scene">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SaveGame">
+        <PropertyRef Name="Scene_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CellCoordsEntity">
+    <End Role="CellCoords" Type="EscapeDataModel.Store.CellCoords" Multiplicity="*" />
+    <End Role="Entity" Type="EscapeDataModel.Store.Entities" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <ReferentialConstraint>
+      <Principal Role="Entity">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CellCoords">
+        <PropertyRef Name="Entity_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ScreenCoordsEntity">
+    <End Role="ScreenCoords" Type="EscapeDataModel.Store.ScreenCoords" Multiplicity="*" />
+    <End Role="Entity" Type="EscapeDataModel.Store.Entities" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <ReferentialConstraint>
+      <Principal Role="Entity">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ScreenCoords">
+        <PropertyRef Name="Entity_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="EscapeDataModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="EscapeDataModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Entities" EntityType="EscapeDataModel.Entity" />
+          <EntitySet Name="EntityTypes" EntityType="EscapeDataModel.EntityType" />
+          <AssociationSet Name="EntityTypeEntity" Association="EscapeDataModel.EntityTypeEntity">
+            <End EntitySet="EntityTypes" Role="EntityType" />
+            <End EntitySet="Entities" Role="Entity" />
+          </AssociationSet>
+          <EntitySet Name="InstantiatedEntities" EntityType="EscapeDataModel.InstantiatedEntity" />
+          <AssociationSet Name="InstantiatedEntityEntity" Association="EscapeDataModel.InstantiatedEntityEntity">
+            <End EntitySet="InstantiatedEntities" Role="InstantiatedEntity" />
+            <End EntitySet="Entities" Role="Entity" />
+          </AssociationSet>
+          <EntitySet Name="Scenes" EntityType="EscapeDataModel.Scene" />
+          <EntitySet Name="Levels" EntityType="EscapeDataModel.Level" />
+          <AssociationSet Name="LevelScene" Association="EscapeDataModel.LevelScene">
+            <End Role="Level" EntitySet="Levels" />
+            <End Role="Scene" EntitySet="Scenes" />
+          </AssociationSet>
+          <EntitySet Name="SaveGames" EntityType="EscapeDataModel.SaveGame" />
+          <AssociationSet Name="SceneEntity1" Association="EscapeDataModel.SceneSavegame">
+            <End Role="Scene" EntitySet="Scenes" />
+            <End Role="SaveGame" EntitySet="SaveGames" />
+          </AssociationSet>
+          <EntitySet Name="CellCoords" EntityType="EscapeDataModel.CellCoords" />
+          <AssociationSet Name="CellCoordsEntity" Association="EscapeDataModel.CellCoordsEntity">
+            <End Role="CellCoords" EntitySet="CellCoords" />
+            <End Role="Entity" EntitySet="Entities" />
+          </AssociationSet>
+          <EntitySet Name="ScreenCoords" EntityType="EscapeDataModel.ScreenCoords" />
+          <AssociationSet Name="ScreenCoordsEntity" Association="EscapeDataModel.ScreenCoordsEntity">
+            <End Role="ScreenCoords" EntitySet="ScreenCoords" />
+            <End Role="Entity" EntitySet="Entities" />
+          </AssociationSet>
+          <EntitySet Name="ComponentDependencies" EntityType="EscapeDataModel.ComponentDependencies" />
+        </EntityContainer>
+        <EntityType Name="Entity">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="EntityType" Relationship="EscapeDataModel.EntityTypeEntity" FromRole="Entity" ToRole="EntityType" />
+          <NavigationProperty Name="InstantiatedEntity" Relationship="EscapeDataModel.InstantiatedEntityEntity" FromRole="Entity" ToRole="InstantiatedEntity" />
+          <NavigationProperty Name="CellCoord" Relationship="EscapeDataModel.CellCoordsEntity" FromRole="Entity" ToRole="CellCoords" />
+          <NavigationProperty Name="ScreenCoord" Relationship="EscapeDataModel.ScreenCoordsEntity" FromRole="Entity" ToRole="ScreenCoords" />
+        </EntityType>
+        <EntityType Name="EntityType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="name" Nullable="false" annotation:StoreGeneratedPattern="None" Type="String" />
+          <NavigationProperty Name="Entities" Relationship="EscapeDataModel.EntityTypeEntity" FromRole="EntityType" ToRole="Entity" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <Association Name="EntityTypeEntity">
+          <End Type="EscapeDataModel.EntityType" Multiplicity="1" Role="EntityType">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="EscapeDataModel.Entity" Multiplicity="*" Role="Entity">
+          </End>
+        </Association>
+        <EntityType Name="InstantiatedEntity">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <NavigationProperty Name="Entity" Relationship="EscapeDataModel.InstantiatedEntityEntity" FromRole="InstantiatedEntity" ToRole="Entity" />
+        </EntityType>
+        <Association Name="InstantiatedEntityEntity">
+          <End Type="EscapeDataModel.InstantiatedEntity" Multiplicity="0..1" Role="InstantiatedEntity">
+          </End>
+          <End Type="EscapeDataModel.Entity" Multiplicity="1" Role="Entity">
+          </End>
+        </Association>
+        <EntityType Name="Scene">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Level" Relationship="EscapeDataModel.LevelScene" FromRole="Scene" ToRole="Level" />
+          <NavigationProperty Name="SaveGame" Relationship="EscapeDataModel.SceneSavegame" FromRole="Scene" ToRole="SaveGame" />
+        </EntityType>
+        <EntityType Name="Level">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <NavigationProperty Name="Scene" Relationship="EscapeDataModel.LevelScene" FromRole="Level" ToRole="Scene" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <Association Name="LevelScene">
+          <End Type="EscapeDataModel.Level" Role="Level" Multiplicity="0..1" />
+          <End Type="EscapeDataModel.Scene" Role="Scene" Multiplicity="1" />
+        </Association>
+        <EntityType Name="SaveGame">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" />
+          <NavigationProperty Name="Scene" Relationship="EscapeDataModel.SceneSavegame" FromRole="SaveGame" ToRole="Scene" />
+        </EntityType>
+        <Association Name="SceneSavegame">
+          <End Type="EscapeDataModel.Scene" Role="Scene" Multiplicity="1" />
+          <End Type="EscapeDataModel.SaveGame" Role="SaveGame" Multiplicity="0..1" />
+        </Association>
+        <EntityType Name="CellCoords">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Entity" Relationship="EscapeDataModel.CellCoordsEntity" FromRole="CellCoords" ToRole="Entity" />
+          <Property Name="x" Type="Int32" Nullable="false" />
+          <Property Name="y" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="CellCoordsEntity">
+          <End Type="EscapeDataModel.CellCoords" Role="CellCoords" Multiplicity="0..1" />
+          <End Type="EscapeDataModel.Entity" Role="Entity" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
+        </Association>
+        <EntityType Name="ScreenCoords">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="x" Type="Int32" Nullable="false" />
+          <Property Name="y" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Entity" Relationship="EscapeDataModel.ScreenCoordsEntity" FromRole="ScreenCoords" ToRole="Entity" />
+        </EntityType>
+        <Association Name="ScreenCoordsEntity">
+          <End Type="EscapeDataModel.ScreenCoords" Role="ScreenCoords" Multiplicity="0..1" />
+          <End Type="EscapeDataModel.Entity" Role="Entity" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
+        </Association>
+        <EntityType Name="ComponentDependencies">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="componentName" Type="String" Nullable="false" />
+          <Property Name="dependsOn" Type="String" Nullable="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="EscapeDataModelStoreContainer" CdmEntityContainer="EscapeDataModelContainer">
+    <EntitySetMapping Name="Entities">
+      <EntityTypeMapping TypeName="IsTypeOf(EscapeDataModel.Entity)">
+        <MappingFragment StoreEntitySet="Entities">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EntityTypes">
+      <EntityTypeMapping TypeName="IsTypeOf(EscapeDataModel.EntityType)">
+        <MappingFragment StoreEntitySet="EntityTypes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="InstantiatedEntities">
+      <EntityTypeMapping TypeName="IsTypeOf(EscapeDataModel.InstantiatedEntity)">
+        <MappingFragment StoreEntitySet="InstantiatedEntities">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Scenes">
+      <EntityTypeMapping TypeName="IsTypeOf(EscapeDataModel.Scene)">
+        <MappingFragment StoreEntitySet="Scenes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Levels">
+      <EntityTypeMapping TypeName="IsTypeOf(EscapeDataModel.Level)">
+        <MappingFragment StoreEntitySet="Levels">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SaveGames">
+      <EntityTypeMapping TypeName="IsTypeOf(EscapeDataModel.SaveGame)">
+        <MappingFragment StoreEntitySet="SaveGames">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CellCoords">
+      <EntityTypeMapping TypeName="IsTypeOf(EscapeDataModel.CellCoords)">
+        <MappingFragment StoreEntitySet="CellCoords">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="x" ColumnName="x" />
+          <ScalarProperty Name="y" ColumnName="y" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ScreenCoords">
+      <EntityTypeMapping TypeName="IsTypeOf(EscapeDataModel.ScreenCoords)">
+        <MappingFragment StoreEntitySet="ScreenCoords">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="x" ColumnName="x" />
+          <ScalarProperty Name="y" ColumnName="y" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ComponentDependencies">
+      <EntityTypeMapping TypeName="IsTypeOf(EscapeDataModel.ComponentDependencies)">
+        <MappingFragment StoreEntitySet="ComponentDependencies">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="componentName" ColumnName="componentName" />
+          <ScalarProperty Name="dependsOn" ColumnName="dependsOn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="EntityTypeEntity" TypeName="EscapeDataModel.EntityTypeEntity" StoreEntitySet="Entities">
+      <EndProperty Name="EntityType">
+        <ScalarProperty Name="Id" ColumnName="EntityType_Id" />
+      </EndProperty>
+      <EndProperty Name="Entity">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="InstantiatedEntityEntity" TypeName="EscapeDataModel.InstantiatedEntityEntity" StoreEntitySet="InstantiatedEntities">
+      <EndProperty Name="Entity">
+        <ScalarProperty Name="Id" ColumnName="Entity_Id" />
+      </EndProperty>
+      <EndProperty Name="InstantiatedEntity">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="LevelScene" TypeName="EscapeDataModel.LevelScene" StoreEntitySet="Levels">
+      <EndProperty Name="Scene">
+        <ScalarProperty Name="Id" ColumnName="Scene_Id" />
+      </EndProperty>
+      <EndProperty Name="Level">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="SceneEntity1" TypeName="EscapeDataModel.SceneSavegame" StoreEntitySet="SaveGames">
+      <EndProperty Name="Scene">
+        <ScalarProperty Name="Id" ColumnName="Scene_Id" />
+      </EndProperty>
+      <EndProperty Name="SaveGame">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="CellCoordsEntity" TypeName="EscapeDataModel.CellCoordsEntity" StoreEntitySet="CellCoords">
+      <EndProperty Name="Entity">
+        <ScalarProperty Name="Id" ColumnName="Entity_Id" />
+      </EndProperty>
+      <EndProperty Name="CellCoords">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ScreenCoordsEntity" TypeName="EscapeDataModel.ScreenCoordsEntity" StoreEntitySet="ScreenCoords">
+      <EndProperty Name="Entity">
+        <ScalarProperty Name="Id" ColumnName="Entity_Id" />
+      </EndProperty>
+      <EndProperty Name="ScreenCoords">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

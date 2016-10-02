@@ -4,37 +4,72 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Linq;
 using System.Diagnostics;
+using System.Data.Linq.Mapping;
+using System.Data.Linq;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Data;
+using System.Runtime.Serialization;
+using System.Data.Entity.Core.Objects.DataClasses;
+using System.Reflection;
 
 namespace Escape
 {
+
+
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class Game1 : Game
+    public class MainUpdateLoop : Game
     {
+        //public Entity instantiateEntity(string name)
+        //{
+        //    Entity newEntity;
+        //    using (var db = new EscapeDatabaseEntities())
+        //    {
+        //        var entityId = (from t in db.EntityTypes
+        //                     where t.name == name
+        //                      select t.entityID).FirstOrDefault();
+        //        newEntity = db.Entities.AsNoTracking().FirstOrDefault(item => item.Id == entityId);
+        //        object source = newEntity;
+        //        TypeInfo entityTypeInfo = typeof(Entity).GetTypeInfo();
+        //        IEnumerable<PropertyInfo> declaredProperties = entityTypeInfo.DeclaredProperties;
+        //        foreach (var property in declaredProperties)
+        //        {
+        //            if (property.Name != "Id" && property.Name != "EntityTypes" && property.Name != "Scene")
+        //            {
+        //                PropertyInfo prop = source.GetType().GetProperty(property.Name);
+        //                if (prop != null)
+        //                {
+        //                    source = prop.GetValue(source, null);
+        //                    PropertyInfo propertyToSet = source.GetType().GetProperty("entityID");
+        //                    propertyToSet.SetValue(source, -1, null);
+        //                }
+        //            }
+        //        }
+        //        db.Entities.Add(newEntity);
+        //        //InstantiateEntity newInstantiatedEntity = new instantiateEntity();
+
+
+        //    }
+        //    return newEntity;
+        //}
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        public Game1()
+
+        public MainUpdateLoop()
         {
+       //     CheckDatabaseIntegrity.isDatabaseCoherent();
 
-            using (var db = new EscapeDatabaseEntities())
-            {
+        //    using (var db = new EscapeDatabaseEntities())
+       //     {
+//                db.Entities.Add(newEmp);
+ //               db.SaveChanges();
 
-                var query = from b in db.EntityTypes
-                            orderby b.name
-                            select b;
+    //        }
 
-
-                Debug.Indent();
-                Debug.WriteLine("All All student in the database", "Field");
-
-                foreach (var item in query)
-                {
-                    Debug.WriteLine(item.name);
-                }
-
-            }
 
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";

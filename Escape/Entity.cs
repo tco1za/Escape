@@ -14,21 +14,11 @@ namespace Escape
     
     public partial class Entity
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Entity()
-        {
-            this.EntityTypes = new HashSet<EntityType>();
-            this.InstantiatedEntities = new HashSet<InstantiatedEntity>();
-            this.WorldCoords = new HashSet<WorldCoord>();
-        }
-    
         public int Id { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EntityType> EntityTypes { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<InstantiatedEntity> InstantiatedEntities { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<WorldCoord> WorldCoords { get; set; }
+        public virtual EntityType EntityType { get; set; }
+        public virtual InstantiatedEntity InstantiatedEntity { get; set; }
+        public virtual CellCoords CellCoord { get; set; }
+        public virtual ScreenCoords ScreenCoord { get; set; }
     }
 }

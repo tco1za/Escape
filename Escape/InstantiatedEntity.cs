@@ -15,10 +15,7 @@ namespace Escape
     public partial class InstantiatedEntity
     {
         public int Id { get; set; }
-        public int sceneID { get; set; }
-        public int entityID { get; set; }
     
         public virtual Entity Entity { get; set; }
-        public virtual Scene Scene { get; set; }
     }
 }
